@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModelFirst.Configuratin;
 using ModelFirst.Models;
+using ModelFirst.Models.External;
 using ModelFirst.Models.MyModels;
 using System.Reflection;
 
@@ -23,6 +24,8 @@ namespace ModelFirst.DataAcsess
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<FluentClass> FluentClasses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +35,8 @@ namespace ModelFirst.DataAcsess
             // bu holatda bittadan o'tkazamiz
             //modelBuilder.ApplyConfiguration(new BookTypeConfiguration());
             //modelBuilder.ApplyConfiguration(new PrinterTypeConfiguration());
+
+            //modelBuilder.ApplyConfiguration(new FluentClassTypeConfiguration());
         }
 
 

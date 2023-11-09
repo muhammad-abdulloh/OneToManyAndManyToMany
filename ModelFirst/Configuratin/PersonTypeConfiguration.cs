@@ -8,7 +8,6 @@ namespace ModelFirst.Configuratin
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name)
                 .IsRequired();

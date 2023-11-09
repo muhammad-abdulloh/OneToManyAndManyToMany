@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModelFirst.DataAcsess;
+using ModelFirst.Models.External;
 using ModelFirst.Models.MyModels;
 
 namespace ModelFirst.Controllers
@@ -78,10 +79,25 @@ namespace ModelFirst.Controllers
             return Ok(menu);
         }
 
+        /// <summary>
+        /// GetAny
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet]
         public async ValueTask<IActionResult> GetAny(string name)
         {
             var result = await _context.Menus.FirstOrDefaultAsync(x => x.Name == name);    
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetFluent()
+        {
+
+            var result = await _context.FluentClasses.FromSqlRaw("Select * from FluentClasses").ToListAsync();
 
             return Ok(result);
         }
