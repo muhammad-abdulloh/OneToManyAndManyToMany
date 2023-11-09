@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModelFirst.Configuratin;
 using ModelFirst.Models;
+using ModelFirst.Models.MyModels;
+using System.Reflection;
 
 namespace ModelFirst.DataAcsess
 {
@@ -16,6 +19,20 @@ namespace ModelFirst.DataAcsess
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<PersonCars> PersonCars { get; set; }
+        public virtual DbSet<Printer> Printers { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // shunda shu assemblydagi hama type configurationlarni o'zi topvolib qo'shib qo'yadi
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
+
+            // bu holatda bittadan o'tkazamiz
+            //modelBuilder.ApplyConfiguration(new BookTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new PrinterTypeConfiguration());
+        }
 
 
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModelFirst.DataAcsess;
 
@@ -11,9 +12,11 @@ using ModelFirst.DataAcsess;
 namespace ModelFirst.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231109071017_manymany")]
+    partial class manymany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,28 +118,6 @@ namespace ModelFirst.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("CourseStudents");
-                });
-
-            modelBuilder.Entity("ModelFirst.Models.MyModels.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("ModelFirst.Models.Person", b =>
@@ -244,19 +225,6 @@ namespace ModelFirst.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Users");
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("ModelFirst.Models.MyModels.Employee", b =>
-                {
-                    b.HasBaseType("ModelFirst.Models.User");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("ModelFirst.Models.Book", b =>
@@ -289,15 +257,6 @@ namespace ModelFirst.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("ModelFirst.Models.MyModels.Menu", b =>
-                {
-                    b.HasOne("ModelFirst.Models.MyModels.Menu", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("ModelFirst.Models.PersonCars", b =>
                 {
                     b.HasOne("ModelFirst.Models.Car", "Cars")
@@ -326,15 +285,6 @@ namespace ModelFirst.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("ModelFirst.Models.MyModels.Employee", b =>
-                {
-                    b.HasOne("ModelFirst.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("ModelFirst.Models.MyModels.Employee", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ModelFirst.Models.Car", b =>
                 {
                     b.Navigation("CarPersons");
@@ -348,11 +298,6 @@ namespace ModelFirst.Migrations
             modelBuilder.Entity("ModelFirst.Models.Course", b =>
                 {
                     b.Navigation("CourseStudents");
-                });
-
-            modelBuilder.Entity("ModelFirst.Models.MyModels.Menu", b =>
-                {
-                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("ModelFirst.Models.Person", b =>
